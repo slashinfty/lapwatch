@@ -46,7 +46,8 @@ export default class Lapwatch {
     /**
      * Start the stopwatch
      */
-    async start(): void {
+    async start(): Promise<void> {
+        if (this.#start !== null) throw 'Timer has already started';
         if (this.#elapsed === 0) {
             this.#elapsed += this.initial;
             if (this.delay > 0) await this.#wait(this.delay);
@@ -56,12 +57,13 @@ export default class Lapwatch {
 
     /**
      * Stop the stopwatch
-     * @param lap Whether or not to add the final time to laps
-     * @returns The final elapsed time
+     * @param lap Whether or not to add the current time to laps
+     * @returns The elapsed time at stopping
      */
     stop(lap: boolean = false): number {
-        this.#elapsed += performance.now() - this.#start;
+        if (this.#start === null) throw 'Timer is not active';
         if (lap) this.lap();
+        this.#elapsed += performance.now() - this.#start;
         this.#start = null;
         return this.#elapsed;
     }
@@ -71,7 +73,7 @@ export default class Lapwatch {
      * @returns Amount of time elapsed
      */
     elapsed(): number {
-        return this.#start === null ? 0 : this.#elapsed + performance.now() - this.#start;
+        return this.#elapsed + (this.#start !== null ? performance.now() - this.#start : 0);
     }
 
     /**
@@ -79,6 +81,7 @@ export default class Lapwatch {
      * @returns Amount of time elapsed
      */
     lap(): number {
+        if (this.#start === null) throw 'Timer is not active';
         const lap = this.elapsed();
         this.laps.push(lap);
         return lap;
