@@ -1,9 +1,10 @@
 {
   "name": "lapwatch",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Stopwatch written in TypeScript",
   "type": "module",
   "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
   "files": [
     "dist/**/*"
   ],
