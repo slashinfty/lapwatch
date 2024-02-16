@@ -62,6 +62,9 @@ const lapwatch = new Lapwatch({
 - Returns the current elapsed amount of time
 - Throws an error if the timer is inactive
 
+`lapwatch.set(time)`
+- Sets the elapsed amount of time to a specific value
+
 `lapwatch.reset()`
 - Resets the timer to all initial values
 

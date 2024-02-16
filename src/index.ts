@@ -86,6 +86,15 @@ export default class Lapwatch {
         this.laps.push(lap);
         return lap;
     }
+    
+    /**
+     * Set the elapsed time to a specific value
+     * @param time The amount of time
+     */
+    set(time: number): void {
+        this.#start = performance.now();
+        this.#elapsed = time;
+    }
 
     /**
      * Resets the timer to initial values
